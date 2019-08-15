@@ -8,11 +8,7 @@
 /node_modules
 
 
-/public/assets
 # Ignore master key for decrypting credentials and more.
 
-node_modules/
-/dist/main.js
 .DS_Store
-npm-debug.log
 api_keys.txt
