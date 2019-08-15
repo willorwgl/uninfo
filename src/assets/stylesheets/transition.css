@@ -1,0 +1,45 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+[class|="transition-rect"] {
+    height: 20%;
+    background: #3498DB;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+}
+
+.transition-rect-1 {
+    top: 0;
+
+}
+
+.transition-rect-2 {
+    top: 20%;
+}
+
+.transition-rect-3 {
+    top: 40%;
+}
+
+.transition-rect-4 {
+    top: 60%;
+}
+
+.transition-rect-5 {
+    top: 80%;
+}
+
+.drip-drop {
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    top: -30px;
+}
