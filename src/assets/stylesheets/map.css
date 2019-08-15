@@ -1,15 +1,30 @@
-/* #map {
-  height: 800px;
-  width: 800px;
-} */
+#map {
+  height: 600px;
+  width: 1000px;
+  margin: 0 auto;
+  border-radius: 5px;
 
-.university-photo {
-  /* width: 100px;
-    height: 100px; */
 }
 
+.university-photo {
+  margin-right: 10px;
+}
+.university-info {
+  display: flex;
+  flex-direction: column;
+}
 .gm-style .gm-style-iw div {
   display: flex;
 }
+
+.statistics-link:hover {
+  text-decoration: underline;
+}
+
+.statistics-link {
+  color: #4267b2;
+  cursor: pointer;
+}
+
 
 

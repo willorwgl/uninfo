@@ -1,10 +1,13 @@
 import * as d3 from "d3";
 import axios from "axios";
+import {
+    pageTransitionAnimation
+} from "./animation"
+import { setup } from "./data"
 
-let map;
 
 window.initMap = () => {
-    map = new google.maps.Map(d3.select("#map").node(), {
+    window.map = new google.maps.Map(d3.select("#map").node(), {
         center: {
             lat: 39.8097343,
             lng: -98.5556199
@@ -84,27 +87,17 @@ window.initMap = () => {
     });
     let markers;
     d3.csv("/data/location.csv")
-        .then(function (data) {
+        .then( (data) => {
             markers = data.map(university => {
                 const latLng = {
-                    lat: Number(university.lat),
-                    lng: Number(university.lng)
+                    lat: +university.lat,
+                    lng: +university.lng
                 };
                 const marker = addMarker(latLng);
-                // marker.addListener("click", toggleBounce(marker));
                 addInfoWindow(marker, university.universityName);
                 return marker;
             });
 
-            function toggleBounce(marker) {
-                return e => {
-                    if (marker.getAnimation() !== null) {
-                        marker.setAnimation(null);
-                    } else {
-                        marker.setAnimation(google.maps.Animation.BOUNCE);
-                    }
-                };
-            }
         })
         .then(() => {
             const markerCluster = new MarkerClusterer(map, markers, {
@@ -127,9 +120,17 @@ function addInfoWindow(marker, universityName) {
             image = data.thumbnail ? data.thumbnail.source : null;
         });
         infoWindow.setContent(
-            `${image ? `<img src=${image} class="university-photo"></img>` : ""}${description}`
+            `${image ? `<img src=${image} class="university-photo"></img>` : ""} <div class="university-info"> ${description} <span class="statistics-link" data-school="${universityName}">View statistics<span> </div>`
         );
         infoWindow.open(map, marker);
+        google.maps.event.addListener(infoWindow, 'domready', () => {
+            document.querySelector(".statistics-link").addEventListener("click", (e) => {
+                debugger
+                infoWindow.close()
+
+                pageTransitionAnimation(".main")
+            })
+        });
     });
 }
 
@@ -141,4 +142,31 @@ function addMarker(location) {
     return marker;
 }
 
- 
+function zoomIn(map, desiredZoomLevel, currentZoomLevel) {
+    if (currentZoomLevel >= desiredZoomLevel) {
+        return;
+    } else {
+        const zoom = google.maps.event.addListener(map, 'zoom_changed', function (event) {
+            google.maps.event.removeListener(zoom);
+            zoomIn(map, desiredZoomLevel, currentZoomLevel + 1);
+        });
+        setTimeout(function () {
+            map.setZoom(currentZoomLevel)
+        }, 80);
+    }
+}
+
+export function smoothZoom(map, desiredZoomLevel, currentZoomLevel, latLng) {
+    if (currentZoomLevel <= desiredZoomLevel) {
+        map.panTo(latLng)
+        zoomIn(map, 20, map.getZoom())
+    } else {
+        const zoom = google.maps.event.addListener(map, 'zoom_changed', function (event) {
+            google.maps.event.removeListener(zoom);
+            smoothZoom(map, desiredZoomLevel, currentZoomLevel - 1, latLng);
+        });
+        setTimeout(function () {
+            map.setZoom(currentZoomLevel)
+        }, 80);
+    }
+}
