@@ -1,19 +1,22 @@
 import anime from 'animejs/lib/anime.es.js';
 import * as d3 from "d3"
+import { viewSetup } from './data';
 
-export function pageTransitionAnimation(transitionFrom, transitionTo) {
+export function pageTransitionAnimation(fromHomepage) {
     anime({
         targets: '[class|="transition-rect"]',
         width: "100%",
         easing: 'easeInOutQuad',
         delay: anime.stagger(300),
-        endDelay: 500,
+        duration: 1500,
+        endDelay: 250,
         complete: () => {
-            toggleDisplay(transitionFrom)
+            fromHomepage ? toggleDisplay(".main") : toggleDisplay(".statistics")
             dripDropAnimation()
         }
     });
 }
+
 
 
 function toggleDisplay(query) {
@@ -25,35 +28,40 @@ function displayStatistics() {
     anime({
         targets: ".statistics",
         opacity: 1,
-        duration: 5000,
-        complete: resetSpread
+        complete: () => {
+            viewSetup(universityName)
+        }
     })
 }
 
 function resetSpread() {
+    toggleDisplay(".spread")
     anime({
         targets: ".spread",
         scale: 1,
         duration: 3000,
     })
-    toggleDisplay(".spread")
+
 }
 
 function spreadAnimation() {
     toggleDisplay(".spread")
+    setTimeout(() => {
+           anime({
+               targets: '[class|="transition-rect"]',
+               width: "0%",
+               easing: 'easeInOutQuad',
+           })
+    }, 500)
     anime({
         targets: ".spread",
-        scale: 170,
-        duration: 3000,
+        scale: 250,
+        duration: 1500,
         complete: () => {
-            anime({
-                targets: '[class|="transition-rect"]',
-                width: "0%",
-                easing: 'easeInOutQuad',
-            })
+            resetSpread()
+            displayStatistics()
         }
     })
-    setTimeout(displayStatistics, 2000)
 }
 
 function dripDropAnimation() {

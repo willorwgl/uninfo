@@ -1,13 +1,15 @@
 import * as Map from "./map"
 import * as d3 from "d3"
+import { setup, viewSetup } from "./data"
 
+let csvData;
 document.addEventListener("DOMContentLoaded", async () => {
-    let csvData;
     await d3.csv("/data/location.csv").then(
         (response) => {
             csvData = response
         }
     )
+    setup()
     const autoCompletejs = new autoComplete({
         data: {
             src: csvData,
@@ -24,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         threshold: 0,
         debounce: 300,
         searchEngine: "strict",
-        maxResults: 5,
+        maxResults: 3,
         resultsList: {
             render: true,
             container: source => {
@@ -40,13 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             },
             element: "li"
         },
-        // noResults: () => {
-        //     const result = document.createElement("li");
-        //     result.setAttribute("class", "no_result");
-        //     result.setAttribute("tabindex", "1");
-        //     result.innerHTML = "No Results";
-        //     document.querySelector("#autoComplete_results_list").appendChild(result);
-        // },
         onSelection: feedback => {
             const {
                 lat,
@@ -60,5 +55,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
     });
-    
+
 })

@@ -3,7 +3,8 @@ import axios from "axios";
 import {
     pageTransitionAnimation
 } from "./animation"
-import { setup } from "./data"
+import { viewSetup } from "./data"
+
 
 
 window.initMap = () => {
@@ -13,6 +14,7 @@ window.initMap = () => {
             lng: -98.5556199
         },
         zoom: 4,
+        backgroundColor: 'hsla(0, 0%, 0%, 0)',
         styles: [{
                 featureType: "administrative",
                 elementType: "labels.text.fill",
@@ -120,15 +122,14 @@ function addInfoWindow(marker, universityName) {
             image = data.thumbnail ? data.thumbnail.source : null;
         });
         infoWindow.setContent(
-            `${image ? `<img src=${image} class="university-photo"></img>` : ""} <div class="university-info"> ${description} <span class="statistics-link" data-school="${universityName}">View statistics<span> </div>`
+            `${image ? `<img src=${image} class="university-photo"></img>` : ""} <div class="university-info"> ${description} <span class="statistics-link" data-university="${universityName}">View statistics<span> </div>`
         );
         infoWindow.open(map, marker);
         google.maps.event.addListener(infoWindow, 'domready', () => {
             document.querySelector(".statistics-link").addEventListener("click", (e) => {
-                debugger
-                infoWindow.close()
-
-                pageTransitionAnimation(".main")
+                // window.universityName = universityName
+                // pageTransitionAnimation(true)
+                viewSetup(universityName)
             })
         });
     });
