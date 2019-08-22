@@ -1,6 +1,12 @@
 import * as Map from "./map"
 import * as d3 from "d3"
-import { setup, viewSetup } from "./data"
+import {
+    setup
+} from "./data"
+import {
+    homepageTransitionAnimation,
+    statisticsTransitionAnimation
+} from "./animation";
 
 let csvData;
 document.addEventListener("DOMContentLoaded", async () => {
@@ -10,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     )
     setup()
+
     const autoCompletejs = new autoComplete({
         data: {
             src: csvData,
@@ -53,7 +60,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             Map.smoothZoom(map, 4, map.getZoom(), latLng)
         }
-
     });
 
+    d3.select(".homepage-arrow").on("click", homepageTransitionAnimation)
+    d3.select(".statistics-arrow").on("click", statisticsTransitionAnimation)
 })

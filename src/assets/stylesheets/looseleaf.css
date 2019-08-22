@@ -5,7 +5,7 @@
     width: 50%;
     height: 80%;
     padding: 6px 42px 4px 42px;
-    position: absolute;
+    position: absolute !important;
     color: #444;
     line-height: 30px;
     border: 1px solid #d2d2d2;

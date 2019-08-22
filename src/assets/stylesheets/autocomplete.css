@@ -19,6 +19,26 @@
     top: -30px;
 }
 
+.selected-universities {
+    background: red;
+    width: 200px;
+    height: 150px;
+    position: absolute;
+    z-index: 4;
+    transform: rotate(-8deg);
+    left: 50px;
+}
+
+.selected {
+    display: flex;
+    justify-content: space-between
+}
+
+.unselect-option {
+    cursor: pointer;
+    color: blue;
+}
+
 #autoComplete {
     width: 100%;
     height: 100%;
@@ -46,4 +66,3 @@
     cursor: pointer;
     box-sizing: border-box;
 }
-

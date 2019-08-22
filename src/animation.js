@@ -1,78 +1,48 @@
 import anime from 'animejs/lib/anime.es.js';
 import * as d3 from "d3"
-import { viewSetup } from './data';
+import {
+    viewSetup
+} from './data';
 
-export function pageTransitionAnimation(fromHomepage) {
+export function homepageTransitionAnimation() {
+    d3.select(".statistics-container").style("display", "block")
     anime({
-        targets: '[class|="transition-rect"]',
-        width: "100%",
+        targets: '.statistics-container',
+        translateX: "-100%",
         easing: 'easeInOutQuad',
-        delay: anime.stagger(300),
         duration: 1500,
-        endDelay: 250,
         complete: () => {
-            fromHomepage ? toggleDisplay(".main") : toggleDisplay(".statistics")
-            dripDropAnimation()
+            anime({
+                targets: '.main',
+                translateX: "-100%",
+                complete: () => {
+                    d3.select(".main").style("display", "none")
+                    d3.select(".statistics-arrow").style("display", "block")
+                    d3.select(".homepage-arrow").style("display", "none")
+                }
+            })
         }
     });
 }
 
-
-
-function toggleDisplay(query) {
-    const el = d3.select(query)
-    el.style("display") === "none" ? el.style("display", "block") : el.style("display", "none")
-}
-
-function displayStatistics() {
+export function statisticsTransitionAnimation() {
+    const main = d3.select(".main").style("display", "block").style("z-index", 5)
+    const homeArrow = d3.select(".homepage-arrow").style("display", "none")
     anime({
-        targets: ".statistics",
-        opacity: 1,
-        complete: () => {
-            viewSetup(universityName)
-        }
-    })
-}
-
-function resetSpread() {
-    toggleDisplay(".spread")
-    anime({
-        targets: ".spread",
-        scale: 1,
-        duration: 3000,
-    })
-
-}
-
-function spreadAnimation() {
-    toggleDisplay(".spread")
-    setTimeout(() => {
-           anime({
-               targets: '[class|="transition-rect"]',
-               width: "0%",
-               easing: 'easeInOutQuad',
-           })
-    }, 500)
-    anime({
-        targets: ".spread",
-        scale: 250,
+        targets: '.main',
+        translateX: "0%",
+        easing: 'easeInOutQuad',
         duration: 1500,
         complete: () => {
-            resetSpread()
-            displayStatistics()
+            anime({
+                targets: '.statistics-container',
+                translateX: "0%",
+                complete: () => {
+                    main.style("z-index", 1)
+                    d3.select(".statistics-arrow").style("display", "none")
+                    homeArrow.style("display", "block")
+                }
+            })
         }
-    })
-}
-
-function dripDropAnimation() {
-    toggleDisplay(".drip-drop")
-    anime({
-        targets: ".drip-drop",
-        translateY: 400,
-        complete: () => {
-            toggleDisplay(".drip-drop")
-            spreadAnimation()
-        }
-    })
-
+    });
 }

@@ -1,12 +1,15 @@
 import * as d3 from "d3";
 import axios from "axios";
 import {
-    pageTransitionAnimation
+    homepageTransitionAnimation
 } from "./animation"
-import { viewSetup } from "./data"
+import {
+    viewSetup
+} from "./data"
 
 
 
+const selectedUniversities = []
 window.initMap = () => {
     window.map = new google.maps.Map(d3.select("#map").node(), {
         center: {
@@ -89,7 +92,7 @@ window.initMap = () => {
     });
     let markers;
     d3.csv("/data/location.csv")
-        .then( (data) => {
+        .then((data) => {
             markers = data.map(university => {
                 const latLng = {
                     lat: +university.lat,
@@ -126,14 +129,43 @@ function addInfoWindow(marker, universityName) {
         );
         infoWindow.open(map, marker);
         google.maps.event.addListener(infoWindow, 'domready', () => {
-            document.querySelector(".statistics-link").addEventListener("click", (e) => {
-                // window.universityName = universityName
-                // pageTransitionAnimation(true)
-                viewSetup(universityName)
+
+            const links = d3.selectAll(".statistics-link").nodes()
+            links.forEach((link) => {
+                link.addEventListener("click", () => {
+                    let proceed = true
+                    if (selectedUniversities.length < 2 && !selectedUniversities.includes(universityName)) {
+                        selectedUniversities.push(universityName)
+                        d3.select(".homepage-arrow").style("display", selectedUniversities.length ? "block" : "none")
+                    } else {
+                        alert("warning message placeholder")
+                        proceed = false
+                    }
+                    if (proceed) {
+                        const [university1, university2] = selectedUniversities
+                        d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university='${university1}'>${university1} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university=${university2}>${university2} <span class="unselect-option">X</span></div>` : ""}`)
+                        const unselectOptions = d3.select(".unselect-option").nodes()
+
+                        unselectOptions.forEach(option => {
+                            option.addEventListener("click", (e) => {
+                                const idx = selectedUniversities.indexOf(option.parentNode.dataset.university)
+                                selectedUniversities.splice(idx, 1);
+                                const [university1, university2] = selectedUniversities
+                                d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university='${university1}'>${university1} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university=${university2}>${university2} <span class="unselect-option">X</span></div>` : ""}`)
+                                d3.select(".homepage-arrow").style("display", selectedUniversities.length ? "block" : "none")
+                            })
+                        })
+                        viewSetup(selectedUniversities)
+                    }
+                })
             })
+
+
         });
     });
 }
+
+
 
 function addMarker(location) {
     let marker = new google.maps.Marker({
