@@ -11,7 +11,7 @@ export function admissionBarChart(data1, data2) {
     const keys = ["percentAdmitted", "percentAdmittedMen", "percentAdmittedWomen"]
     const admissionData1 = d3.entries(select(keys, data1))
 
-    const container = d3.select('.statistics .admission'),
+    const container = d3.select('.statistics').append("div").attr("class", "admission"),
         width = 400,
         height = 350,
         margin = {
@@ -146,6 +146,7 @@ export function admissionBarChart(data1, data2) {
 
 
 export function costBarChart(data1, data2) {
+    debugger
     const compare = data1 && data2
     const categorizedCostData1 = [{
             category: "On Campus",
@@ -172,7 +173,7 @@ export function costBarChart(data1, data2) {
 
 
 
-    const container = d3.select('.statistics .costs'),
+    const container = d3.select('.statistics').append("div").attr("class", "costs"),
         width = 400,
         height = 350,
         margin = {
@@ -442,7 +443,7 @@ export function SATBarChart(data1, data2) {
         }
     ]
 
-    const container = d3.select('.statistics .sat'),
+    const container = d3.select('.statistics').append("div").attr("class", "sat"),
         width = 400,
         height = 350,
         margin = {
@@ -678,7 +679,7 @@ export function ACTBarChart(data1, data2) {
         }
     ]
 
-    const container = d3.select('.statistics .act'),
+    const container = d3.select('.statistics').append("div").attr("class", "act"),
         width = 400,
         height = 350,
         margin = {

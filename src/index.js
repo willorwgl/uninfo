@@ -4,8 +4,8 @@ import {
     setup
 } from "./data"
 import {
-    homepageTransitionAnimation,
-    statisticsTransitionAnimation
+    statisticsTransitionAnimation,
+    homepageTransitionAnimation
 } from "./animation";
 
 let csvData;
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (a.match > b.match) return 1;
             return 0;
         },
-        placeHolder: "Universities ...",
+        placeHolder: "Search for universities here :)",
         selector: "#autoComplete",
         threshold: 0,
         debounce: 300,
@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             Map.smoothZoom(map, 4, map.getZoom(), latLng)
         }
     });
-
-    d3.select(".homepage-arrow").on("click", homepageTransitionAnimation)
     d3.select(".statistics-arrow").on("click", statisticsTransitionAnimation)
+    d3.select(".homepage-arrow").on("click", homepageTransitionAnimation)
 })

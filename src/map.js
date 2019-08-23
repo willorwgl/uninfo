@@ -1,15 +1,14 @@
 import * as d3 from "d3";
 import axios from "axios";
 import {
-    homepageTransitionAnimation
-} from "./animation"
-import {
     viewSetup
 } from "./data"
 
 
 
-const selectedUniversities = []
+window.selectedUniversities = []
+
+
 window.initMap = () => {
     window.map = new google.maps.Map(d3.select("#map").node(), {
         center: {
@@ -125,8 +124,11 @@ function addInfoWindow(marker, universityName) {
             image = data.thumbnail ? data.thumbnail.source : null;
         });
         infoWindow.setContent(
-            `${image ? `<img src=${image} class="university-photo"></img>` : ""} <div class="university-info"> ${description} <span class="statistics-link" data-university="${universityName}">View statistics<span> </div>`
+            `${image ? `<img src=${image} class="university-photo"></img>` : ""}` +
+            `<div class="university-info"> ${description} <span class="statistics-link" data-university="${universityName}"` +
+            `data-image="${image}" data-description="${description}">Select<span> </div>`
         );
+
         infoWindow.open(map, marker);
         google.maps.event.addListener(infoWindow, 'domready', () => {
 
@@ -134,28 +136,40 @@ function addInfoWindow(marker, universityName) {
             links.forEach((link) => {
                 link.addEventListener("click", () => {
                     let proceed = true
-                    if (selectedUniversities.length < 2 && !selectedUniversities.includes(universityName)) {
-                        selectedUniversities.push(universityName)
+                    if (selectedUniversities.length < 2 && !selectedUniversities.find((datum) => {
+                            return datum.universityName === universityName
+                        })) {
+                        const universityObj = {
+                            universityName,
+                            universityDescription: link.dataset.description,
+                            universityImage: link.dataset.image
+                        }
+                        selectedUniversities.push(universityObj)
                         d3.select(".homepage-arrow").style("display", selectedUniversities.length ? "block" : "none")
                     } else {
                         alert("warning message placeholder")
                         proceed = false
                     }
                     if (proceed) {
-                        const [university1, university2] = selectedUniversities
-                        d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university='${university1}'>${university1} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university=${university2}>${university2} <span class="unselect-option">X</span></div>` : ""}`)
-                        const unselectOptions = d3.select(".unselect-option").nodes()
+                        infoWindow.close();
+                        const [
+                            university1 = null,
+                            university2 = null
+                        ] = selectedUniversities
+                        d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university="${university1.universityName}">${university1.universityName} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university="${university2.universityName}">${university2.universityName} <span class="unselect-option">X</span></div>` : ""}`)
+                        const unselectOptions = d3.selectAll(".unselect-option").nodes()
 
                         unselectOptions.forEach(option => {
                             option.addEventListener("click", (e) => {
-                                const idx = selectedUniversities.indexOf(option.parentNode.dataset.university)
+
+                                const idx = selectedUniversities.indexOf(selectedUniversities.find((datum) => datum.universityName === option.parentNode.dataset.university))
                                 selectedUniversities.splice(idx, 1);
-                                const [university1, university2] = selectedUniversities
-                                d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university='${university1}'>${university1} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university=${university2}>${university2} <span class="unselect-option">X</span></div>` : ""}`)
+                                const [university1 = null, university2 = null] = selectedUniversities
+                        d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university="${university1.universityName}">${university1.universityName} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university="${university2.universityName}">${university2.universityName} <span class="unselect-option">X</span></div>` : ""}`)
                                 d3.select(".homepage-arrow").style("display", selectedUniversities.length ? "block" : "none")
                             })
                         })
-                        viewSetup(selectedUniversities)
+                      
                     }
                 })
             })

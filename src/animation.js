@@ -12,6 +12,7 @@ export function homepageTransitionAnimation() {
         easing: 'easeInOutQuad',
         duration: 1500,
         complete: () => {
+            viewSetup(selectedUniversities)
             anime({
                 targets: '.main',
                 translateX: "-100%",
@@ -19,6 +20,7 @@ export function homepageTransitionAnimation() {
                     d3.select(".main").style("display", "none")
                     d3.select(".statistics-arrow").style("display", "block")
                     d3.select(".homepage-arrow").style("display", "none")
+
                 }
             })
         }
@@ -34,6 +36,7 @@ export function statisticsTransitionAnimation() {
         easing: 'easeInOutQuad',
         duration: 1500,
         complete: () => {
+            d3.select(".statistics").html("")
             anime({
                 targets: '.statistics-container',
                 translateX: "0%",

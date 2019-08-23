@@ -38,7 +38,7 @@ export function enrollmentGenderDiversity(data1, data2) {
         .domain(keys)
         .range(["#2766F6", "#FC363B"])
 
-    const container = d3.select(".statistics .enrollment")
+    const container = d3.select(".statistics").append("div").attr("class", "enrollemnt")
 
     createPie(enrollmentData1, enrollmentTotal1)
     createCenter()
@@ -228,7 +228,7 @@ export function applicationGenderDiversity(data1, data2) {
         .domain(keys)
         .range(["#2766F6", "#FC363B"])
 
-    const container = d3.select(".statistics .application")
+    const container = d3.select(".statistics").append("div").attr("class", "application")
 
     createPie(applicationData1, applicationTotal1)
     createCenter()
@@ -373,3 +373,4 @@ export function applicationGenderDiversity(data1, data2) {
             })
     }
 }
+

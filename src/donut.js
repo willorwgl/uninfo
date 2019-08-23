@@ -55,7 +55,7 @@ export function enrollmentRaceDiversity(data1, data2) {
 
     const centerRadius = innerRadius * 0.8
 
-    const container = d3.select(".statistics .diversity")
+    const container = d3.select(".statistics").append("div").attr("class", "diversity")
 
     createDonut(diversityData1)
     createCenter()
