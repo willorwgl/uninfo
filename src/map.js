@@ -85,7 +85,7 @@ window.initMap = () => {
         fullscreenControl: false
     });
     let markers;
-    d3.csv("/data/location.csv")
+    d3.csv("../data/location.csv")
         .then((data) => {
             markers = data.map(university => {
                 const latLng = {
