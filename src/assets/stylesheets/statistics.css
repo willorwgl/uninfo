@@ -27,6 +27,8 @@
     height: 50px;
     z-index: 4;
     justify-content: center;
+    align-content: center;
+    margin-bottom: 30px;
 }
 
 .statistics-header div {
@@ -42,10 +44,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px 0;
+
 }
 
 .description div {
     width: 1000px;
     font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.sat-container,
+.costs-container,
+.act-container,
+.admission-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+}
+
+.enrollment,
+.application,
+.diversity {
+    font-size: 24px;
+}
+
+.statistics-description {
+    margin-top: 15px;
+    width: 70vw;
 }

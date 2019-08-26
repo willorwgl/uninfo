@@ -1,10 +1,5 @@
 import * as d3 from "d3";
 import axios from "axios";
-import {
-    viewSetup
-} from "./data"
-
-
 
 window.selectedUniversities = []
 
@@ -112,7 +107,9 @@ window.initMap = () => {
 
 function wikipediaSearch(searchCriteria) {
     const endpoint = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchCriteria}`;
-    return axios.get(endpoint).then(response => response.data);
+    return axios.get(endpoint).then(response => response.data).catch(() => ({
+        extract_html: searchCriteria,
+    }));
 }
 
 function addInfoWindow(marker, universityName) {
@@ -121,7 +118,7 @@ function addInfoWindow(marker, universityName) {
         let description, image;
         await wikipediaSearch(universityName).then(data => {
             description = data.extract_html;
-            image = data.thumbnail ? data.thumbnail.source : null;
+            image = data.thumbnail ? data.thumbnail.source : ""
         });
         infoWindow.setContent(
             `${image ? `<img src=${image} class="university-photo"></img>` : ""}` +
@@ -147,7 +144,7 @@ function addInfoWindow(marker, universityName) {
                         selectedUniversities.push(universityObj)
                         d3.select(".homepage-arrow").style("display", selectedUniversities.length ? "block" : "none")
                     } else {
-                        alert("warning message placeholder")
+                        alert("You only can choose up to 2 distinct universities")
                         proceed = false
                     }
                     if (proceed) {
@@ -161,7 +158,6 @@ function addInfoWindow(marker, universityName) {
 
                         unselectOptions.forEach(option => {
                             option.addEventListener("click", (e) => {
-
                                 const idx = selectedUniversities.indexOf(selectedUniversities.find((datum) => datum.universityName === option.parentNode.dataset.university))
                                 selectedUniversities.splice(idx, 1);
                                 const [university1 = null, university2 = null] = selectedUniversities

@@ -47,6 +47,7 @@ export async function viewSetup(selectedUniversities) {
     let universityDescriptions = [],
         basicSummaries = [university1.universityDescription, university2.universityDescription],
         universityImages = [university1.universityImage, university2.universityImage]
+        debugger
     await new Promise(async (resolve) => {
         let key = 0
         for (let university of selectedUniversities) {
@@ -88,10 +89,11 @@ export async function viewSetup(selectedUniversities) {
             }
         })
         d3.select(".enrollment-option").on("click", () => {
-            if (selectedOption != "enrollment") {
+            if (selectedOption != "gender") {
                 reset()
                 enrollmentGenderDiversity(data1, data2)
-                selectedOption = "enrollment"
+                applicationGenderDiversity(data1, data2)
+                selectedOption = "gender"
             }
         })
         d3.select(".admission-option").on("click", () => {
@@ -102,11 +104,11 @@ export async function viewSetup(selectedUniversities) {
             }
 
         })
-        d3.select(".diversity-option").on("click", () => {
-            if (selectedOption != "diversity") {
+        d3.select(".race-option").on("click", () => {
+            if (selectedOption != "race") {
                 reset()
                 enrollmentRaceDiversity(data1, data2)
-                selectedOption = "diversity"
+                selectedOption = "race"
             }
         })
         d3.select(".application-option").on("click", () => {

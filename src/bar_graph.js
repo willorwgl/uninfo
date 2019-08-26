@@ -11,19 +11,23 @@ export function admissionBarChart(data1, data2) {
     const keys = ["percentAdmitted", "percentAdmittedMen", "percentAdmittedWomen"]
     const admissionData1 = d3.entries(select(keys, data1))
 
-    const container = d3.select('.statistics').append("div").attr("class", "admission"),
+    const mainContainer = d3.select('.statistics').append("div").attr("class", "admission-container"),
         width = 400,
-        height = 350,
+        height = 420,
         margin = {
-            top: 30,
+            top: 60,
             right: 20,
-            bottom: 30,
+            bottom: 60,
             left: 50
         }
 
+    const description = "Acceptance rate is determined by the ratio of the number of students who are admitted to a university to the number of total applicants that applied to the term."
+    mainContainer.append("div").attr("class", "statistics-description").html(description)
+    const container = mainContainer.append("div").attr("class", "admission")
+
     const x = d3.scaleBand().domain(["Total", "Men", "Women"]).range([0, width - margin.left - margin.right]).padding(.2)
     const y = d3.scaleLinear().domain([0, 100]).range([height - margin.top - margin.bottom, 0])
-    const colors = d3.scaleOrdinal().domain(keys).range(["#ff8080", "#ffba92", "#c6f1d6"])
+    const colors = d3.scaleOrdinal().domain(keys).range(["#00204a", "#005792", "#00bbf0"])
     const labels = {
         "percentAdmitted": "Total",
         "percentAdmittedMen": "Men",
@@ -33,15 +37,15 @@ export function admissionBarChart(data1, data2) {
     const xAxis = d3.axisBottom(x);
     const yAxis = d3.axisLeft(y).ticks(10)
 
-    createChart(admissionData1)
+    createChart(admissionData1, data1.universityName)
     createCenter()
     if (compare) {
 
         var admissionData2 = d3.entries(select(keys, data2))
-        createChart(admissionData2)
+        createChart(admissionData2, data2.universityName)
     }
 
-    function createChart(admissionData) {
+    function createChart(admissionData, universityName) {
         const svg = container
             .append("svg")
             .attr("width", width)
@@ -86,18 +90,25 @@ export function admissionBarChart(data1, data2) {
                 resetComparison()
             })
 
-        // svg.append("text")
-        //     .attr("text-anchor", "end")
-        //     .attr("x", width)
-        //     .attr("y", height + margin.top + 20)
-        //     .text("X axis title");
+        svg.append("text")
+            .attr("x", (width / 3))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("text-decoration", "underline")
+            .text(universityName);
 
-        // svg.append("text")
-        //     .attr("text-anchor", "end")
-        //     .attr("transform", "rotate(-90)")
-        //     .attr("y", -margin.left + 20)
-        //     .attr("x", -margin.top)
-        //     .text("Y axis title")
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("x", width / 2)
+            .attr("y", height - margin.bottom - 20)
+            .text("Category");
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 20)
+            .attr("x", -margin.top)
+            .text("Admission %")
 
         function comparison(d) {
             if (compare) {
@@ -173,14 +184,15 @@ export function costBarChart(data1, data2) {
 
 
 
-    const container = d3.select('.statistics').append("div").attr("class", "costs"),
-        width = 400,
-        height = 350,
+    const mainContainer = d3.select('.statistics').append("div").attr("class", "costs-container"),
+
+        width = 430,
+        height = 420,
         margin = {
-            top: 30,
+            top: 60,
             right: 20,
-            bottom: 30,
-            left: 50
+            bottom: 60,
+            left: 80
         }
 
     const legendLabels = {
@@ -189,11 +201,15 @@ export function costBarChart(data1, data2) {
         outOfState: "Out of State",
     }
 
+    const description = "Cost of attendance for full-time, first-time degree/certificate seeking undergraduate students. It includes tuition and fees, books and supplies, and other on-campus/off-campus expenses."
+    mainContainer.append("div").attr("class", "statistics-description ").html(description)
+
+    const container = mainContainer.append("div").attr("class", "costs")
 
     const x0 = d3.scaleBand().range([0, (width - margin.left - margin.right)]).padding(.2)
     const x1 = d3.scaleBand()
     const y = d3.scaleLinear().range([height - margin.top - margin.bottom, 0])
-    const colors = d3.scaleOrdinal().range(["#ff8080", "#ffba92", "#c6f1d6"])
+    const colors = d3.scaleOrdinal().range(["#00204a", "#005792", "#00bbf0"])
 
     const xAxis = d3.axisBottom(x0);
     const yAxis = d3.axisLeft(y).ticks(10)
@@ -202,7 +218,7 @@ export function costBarChart(data1, data2) {
     x1.domain(['inDistrict', 'inState', "outOfState"]).range([0, x0.bandwidth()])
     y.domain([0, 100000])
 
-    createGroupedBarChart(categorizedCostData1)
+    createGroupedBarChart(categorizedCostData1, data1.universityName)
     createCenter()
     if (compare) {
         var categorizedCostData2 = [{
@@ -227,10 +243,10 @@ export function costBarChart(data1, data2) {
 
             }
         ]
-        createGroupedBarChart(categorizedCostData2)
+        createGroupedBarChart(categorizedCostData2, data2.universityName)
     }
 
-    function createGroupedBarChart(categorizedCostData) {
+    function createGroupedBarChart(categorizedCostData, universityName) {
         const svg = container
             .append("svg")
             .attr("width", width)
@@ -338,6 +354,26 @@ export function costBarChart(data1, data2) {
             .attr("class", "y-axis")
             .call(yAxis);
 
+        svg.append("text")
+            .attr("x", (width / 3))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("text-decoration", "underline")
+            .text(universityName);
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("x", width / 2)
+            .attr("y", height - margin.bottom - 20)
+            .text("Category");
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 20)
+            .attr("x", -margin.top)
+            .text("Cost of Attendence")
+
 
         function comparison(d) {
             if (compare) {
@@ -348,10 +384,14 @@ export function costBarChart(data1, data2) {
                 const texts = container.selectAll(".comparison-data").nodes()
                 dArr.forEach(([key, value], idx) => {
                     const compareToValue = compareToArr[idx]
-                    let percentage = value - compareToValue
-                    percentage >= 0 ? percentage = (percentage / compareToValue * 100).toFixed(2) : percentage = (percentage / value * 100).toFixed(2)
-                    texts[idx].innerHTML = `${legendLabels[key]}:  ${percentage}%`
-                    texts[idx].style.fill = `${percentage < 0 ? "red" : "green"}`
+                    if (compareToValue === 0 || value === 0) {
+                        texts[idx].innerHTML = `${legendLabels[key]}: N/A`
+                    } else {
+                        let percentage = value - compareToValue
+                        percentage >= 0 ? percentage = (percentage / compareToValue * 100).toFixed(2) : percentage = (percentage / value * 100).toFixed(2)
+                        texts[idx].innerHTML = `${legendLabels[key]}:  ${percentage}%`
+                        texts[idx].style.fill = `${percentage < 0 ? "red" : "green"}`
+                    }
                 })
             }
 
@@ -371,7 +411,7 @@ export function costBarChart(data1, data2) {
 
         const svg = container
             .append("svg")
-            .attr("width", 200)
+            .attr("width", 250)
             .attr("height", height)
 
         svg.selectAll("square")
@@ -443,21 +483,24 @@ export function SATBarChart(data1, data2) {
         }
     ]
 
-    const container = d3.select('.statistics').append("div").attr("class", "sat"),
+    const mainContainer = d3.select('.statistics').append("div").attr("class", "sat-container"),
         width = 400,
-        height = 350,
+        height = 360,
         margin = {
-            top: 30,
+            top: 60,
             right: 20,
-            bottom: 30,
-            left: 50
+            bottom: 60,
+            left: 60
         }
 
 
+    const description = "The SAT is a standardized test used for college admissions in the United States. It measures literacy, numeracy and writing skills that are needed for academic success in college. The SAT assesses how well the test-takers analyze and solve problems—skills they learned in school that they will need in college. However, the test is administered under a tight time limit (speeded) to help produce a range of scores. "
+    mainContainer.append("div").attr("class", "statistics-description").html(description)
+    const container = mainContainer.append("div").attr("class", "sat")
     const x0 = d3.scaleBand().range([0, (width - margin.left - margin.right)]).padding(.2)
     const x1 = d3.scaleBand()
     const y = d3.scaleLinear().range([height - margin.top - margin.bottom, 0])
-    const colors = d3.scaleOrdinal().domain(["math", "reading"]).range(["#ff8080", "#ffba92"])
+    const colors = d3.scaleOrdinal().domain(["math", "reading"]).range(["#005792", "#00bbf0"])
 
     const xAxis = d3.axisBottom(x0);
     const yAxis = d3.axisLeft(y).ticks(8)
@@ -466,7 +509,7 @@ export function SATBarChart(data1, data2) {
     x1.domain(['math', 'reading']).range([0, x0.bandwidth()])
     y.domain([0, 800])
 
-    createBarChart(categorizedSATData1)
+    createBarChart(categorizedSATData1, data1.universityName)
     createCenter()
     if (compare) {
         const {
@@ -486,10 +529,10 @@ export function SATBarChart(data1, data2) {
                 reading: SATReading75
             }
         ]
-        createBarChart(categorizedSATData2)
+        createBarChart(categorizedSATData2, data2.universityName)
     }
 
-    function createBarChart(categorizedSATData) {
+    function createBarChart(categorizedSATData, universityName) {
         const svg = container
             .append("svg")
             .attr("width", width)
@@ -547,7 +590,7 @@ export function SATBarChart(data1, data2) {
             .attr("transform", function (d) {
                 const xCoord = x1("reading")
                 const yCoord = y(d.reading)
-                return `translate(${xCoord + 20}, ${yCoord + 20})`
+                return `translate(${xCoord + 10}, ${yCoord + 20})`
             })
             .attr("font-weight", 700)
             .style("fill", "white")
@@ -559,7 +602,7 @@ export function SATBarChart(data1, data2) {
             .attr("transform", function (d) {
                 const xCoord = x1("math")
                 const yCoord = y(d.math)
-                return `translate(${xCoord + 20}, ${yCoord + 20})`
+                return `translate(${xCoord + 10}, ${yCoord + 20})`
             })
             .attr("font-weight", 700)
             .style("fill", "white")
@@ -574,6 +617,27 @@ export function SATBarChart(data1, data2) {
             .attr("class", "y-axis")
             .call(yAxis);
 
+        svg.append("text")
+            .attr("x", (width / 3))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("text-decoration", "underline")
+            .text(universityName);
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("x", width / 2)
+            .attr("y", height - margin.bottom - 20)
+            .text("Percentile");
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 20)
+            .attr("x", -margin.top)
+            .text("Score")
+
+
 
         function comparison(d) {
             if (compare) {
@@ -584,9 +648,13 @@ export function SATBarChart(data1, data2) {
                 const texts = container.selectAll(".comparison-data").nodes()
                 dArr.forEach(([key, value], idx) => {
                     const compareToValue = compareToArr[idx]
-                    const number = value - compareToValue
-                    texts[idx].innerHTML = `${["Math", "Reading"][idx]}:  ${number > 0? "+" + number : number}`
-                    texts[idx].style.fill = `${number < 0 ? "red" : "green"}`
+                    if (compareToValue === 0 || value === 0) {
+                        texts[idx].innerHTML = `${["Math", "Reading"][idx]}:  N/A`
+                    } else {
+                        const number = value - compareToValue
+                        texts[idx].innerHTML = `${["Math", "Reading"][idx]}:  ${number > 0 ? "+" + number : number}`
+                        texts[idx].style.fill = `${number < 0 ? "red" : "green"}`
+                    }
                 })
             }
 
@@ -679,26 +747,29 @@ export function ACTBarChart(data1, data2) {
         }
     ]
 
-    const container = d3.select('.statistics').append("div").attr("class", "act"),
+    const mainContainer = d3.select('.statistics').append("div").attr("class", "act-container"),
         width = 400,
-        height = 350,
+        height = 390,
         margin = {
-            top: 30,
+            top: 60,
             right: 20,
-            bottom: 30,
-            left: 50
+            bottom: 60,
+            left: 60
         }
 
+    const description = "The ACT is a standardized test used for college admissions in the United States. It measuress high school students' general educational development and their capability to complete college-level work with the multiple choice tests covering four skill areas including English and mathematics,"
+    mainContainer.append("div").attr("class", "statistics-description").html(description)
+    const container = mainContainer.append("div").attr("class", "act")
 
 
 
     const x0 = d3.scaleBand().range([0, (width - margin.left - margin.right)]).padding(.2)
     const x1 = d3.scaleBand()
     const y = d3.scaleLinear().range([height - margin.top - margin.bottom, 0])
-    const colors = d3.scaleOrdinal().domain(["composite", "math", "english"]).range(["red", "#ff8080", "#ffba92"])
+    const colors = d3.scaleOrdinal().domain(["composite", "math", "english"]).range(["#00204a", "#005792", "#00bbf0"])
 
     const xAxis = d3.axisBottom(x0);
-    const yAxis = d3.axisLeft(y)
+    const yAxis = d3.axisLeft(y).ticks(18)
 
 
 
@@ -706,7 +777,7 @@ export function ACTBarChart(data1, data2) {
     x1.domain(["composite", 'math', 'english']).range([0, x0.bandwidth()])
     y.domain([0, 36])
 
-    createBarChart(categorizedACTData1)
+    createBarChart(categorizedACTData1, data1.universityName)
     createCenter()
     if (compare) {
         const {
@@ -731,10 +802,10 @@ export function ACTBarChart(data1, data2) {
                 english: ACTEnglish75
             }
         ]
-        createBarChart(categorizedACTData2)
+        createBarChart(categorizedACTData2, data2.universityName)
     }
 
-    function createBarChart(categorizedACTData) {
+    function createBarChart(categorizedACTData, universityName) {
 
         const svg = container
             .append("svg")
@@ -812,7 +883,7 @@ export function ACTBarChart(data1, data2) {
             .attr("transform", function (d) {
                 const xCoord = x1("composite")
                 const yCoord = y(d.composite)
-                return `translate(${xCoord + 12},${yCoord + 20})`
+                return `translate(${xCoord + 5},${yCoord + 20})`
             })
             .attr("font-weight", 700)
             .style("fill", "white")
@@ -823,7 +894,7 @@ export function ACTBarChart(data1, data2) {
             .attr("transform", function (d) {
                 const xCoord = x1("math")
                 const yCoord = y(d.math)
-                return `translate(${xCoord + 12},${yCoord + 20})`
+                return `translate(${xCoord + 5},${yCoord + 20})`
             })
             .attr("font-weight", 700)
             .style("fill", "white")
@@ -834,7 +905,7 @@ export function ACTBarChart(data1, data2) {
             .attr("transform", function (d) {
                 const xCoord = x1("english")
                 const yCoord = y(d.english)
-                return `translate(${xCoord + 12},${yCoord + 20})`
+                return `translate(${xCoord + 5},${yCoord + 20})`
             })
             .attr("font-weight", 700)
             .style("fill", "white")
@@ -850,6 +921,27 @@ export function ACTBarChart(data1, data2) {
             .attr("class", "y-axis")
             .call(yAxis);
 
+        svg.append("text")
+            .attr("x", (width / 3))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("text-decoration", "underline")
+            .text(universityName);
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("x", width / 2)
+            .attr("y", height - margin.bottom - 20)
+            .text("Category");
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 20)
+            .attr("x", -margin.top)
+            .text("Score")
+
+
         function comparison(d) {
             if (compare) {
                 const compareTo = categorizedACTData === categorizedACTData1 ? categorizedACTData2 : categorizedACTData1
@@ -859,9 +951,14 @@ export function ACTBarChart(data1, data2) {
                 const texts = container.selectAll(".comparison-data").nodes()
                 dArr.forEach(([key, value], idx) => {
                     const compareToValue = compareToArr[idx]
-                    const number = value - compareToValue
-                    texts[idx].innerHTML = `${["Composite", "Math", "Reading"][idx]}:  ${number > 0? "+" + number : number}`
-                    texts[idx].style.fill = `${number < 0 ? "red" : "green"}`
+                    if (compareToValue === 0 || value === 0) {
+                        texts[idx].innerHTML = `${["Composite", "Math", "Reading"][idx]}:  N/A`
+                    } else {
+                        const number = value - compareToValue
+                        texts[idx].innerHTML = `${["Composite", "Math", "Reading"][idx]}:  ${number > 0? "+" + number : number}`
+                        texts[idx].style.fill = `${number < 0 ? "red" : "green"}`
+                    }
+
                 })
             }
 
@@ -929,5 +1026,5 @@ export function ACTBarChart(data1, data2) {
                 return `translate(30 ,225)`
             })
     }
-    
+
 }

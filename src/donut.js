@@ -57,6 +57,10 @@ export function enrollmentRaceDiversity(data1, data2) {
 
     const container = d3.select(".statistics").append("div").attr("class", "diversity")
 
+    const description = "Students may want to consider the racial and ethnic diversity of a college campus when choosing a school. The data are drawn from each institution's fall 2017 total undergraduate student body."
+
+
+
     createDonut(diversityData1)
     createCenter()
     if (compare) {

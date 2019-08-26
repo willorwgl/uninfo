@@ -14,8 +14,8 @@ export function enrollmentGenderDiversity(data1, data2) {
             right: 20,
             bottom: 20
         },
-        width = 440 - margin.left - margin.right,
-        height = 440 - margin.top - margin.bottom,
+        width = 380 - margin.left - margin.right,
+        height = 380 - margin.top - margin.bottom,
         outerRadius = height / 2 - 20,
         innerRadius = 0
 
@@ -36,24 +36,38 @@ export function enrollmentGenderDiversity(data1, data2) {
 
     const colors = d3.scaleOrdinal()
         .domain(keys)
-        .range(["#2766F6", "#FC363B"])
+        .range(["#f06868", "#00bbf0"])
 
-    const container = d3.select(".statistics").append("div").attr("class", "enrollemnt")
+    const container = d3.select(".statistics").append("div").attr("class", "enrollment")
 
-    createPie(enrollmentData1, enrollmentTotal1)
+    createPie(enrollmentData1, enrollmentTotal1, data1.universityName)
     createCenter()
     if (compare) {
         var enrollmentData2 = d3.entries(select(keys, data2))
         var enrollmentTotal2 = data2.enrolledTotal
-        createPie(enrollmentData2, enrollmentTotal2)
+        createPie(enrollmentData2, enrollmentTotal2, data2.universityName)
     }
 
-    function createPie(enrollmentData, enrollmentTotal) {
+    function createPie(enrollmentData, enrollmentTotal, universityName) {
         const svg = container.append("svg")
             .attr("width", width)
             .attr("height", height)
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        svg.append("text")
+            .attr("y", -(height / 2 - 20))
+            .attr("text-anchor", "middle")
+            .style("text-decoration", "underline")
+            .text(universityName);
+
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -(height / 2 - 20))
+            .attr("x", (width / 4 - 20))
+            .text("Enrollment")
+
 
         const arcs = svg.selectAll("g")
             .data(pie(enrollmentData))
@@ -104,6 +118,7 @@ export function enrollmentGenderDiversity(data1, data2) {
             })
 
 
+
         function comparison(d) {
             if (compare) {
                 const compareTo = enrollmentData === enrollmentData1 ? enrollmentData2 : enrollmentData1
@@ -116,16 +131,20 @@ export function enrollmentGenderDiversity(data1, data2) {
                 const compareTextPercent = container.select(".comparison-data-percent")
                 const compareTextNumber = container.select(".comparison-data-number")
 
-                const percentage = ((value / enrollmentTotal - compareToValue / compareToEnrollmentTotal) * 100).toFixed(2)
-                compareTextPercent.text(`${percentage > 0 ? "+" : ""}${percentage}%`)
-                compareTextPercent.style("fill", percentage < 0 ? "red" : "green")
+                if (compareToValue === 0 || value === 0) {
+                    compareTextPercent.text(`N/A`)
+                } else {
+                    const percentage = ((value / enrollmentTotal - compareToValue / compareToEnrollmentTotal) * 100).toFixed(2)
+                    compareTextPercent.text(`${percentage > 0 ? "+" : ""}${percentage}%`)
+                    compareTextPercent.style("fill", percentage < 0 ? "red" : "green")
+                    const difference = value - compareToValue
+                    compareTextNumber.text(`${difference > 0 ? "+" : ""}${difference}`)
+                    compareTextNumber.style("fill", difference < 0 ? "red" : "green")
+                }
+
                 compareTextPercent.transition()
                     .duration(1000)
                     .attr("font-size", 36)
-
-                const difference = value - compareToValue
-                compareTextNumber.text(`${difference > 0 ? "+" : ""}${difference}`)
-                compareTextNumber.style("fill", difference < 0 ? "red" : "green")
                 compareTextNumber.transition()
                     .duration(1000)
                     .attr("font-size", 24)
@@ -204,8 +223,8 @@ export function applicationGenderDiversity(data1, data2) {
             right: 20,
             bottom: 20
         },
-        width = 440 - margin.left - margin.right,
-        height = 440 - margin.top - margin.bottom,
+        width = 380 - margin.left - margin.right,
+        height = 380 - margin.top - margin.bottom,
         outerRadius = height / 2 - 20,
         innerRadius = 0
     const legendLabels = {
@@ -226,7 +245,7 @@ export function applicationGenderDiversity(data1, data2) {
 
     const colors = d3.scaleOrdinal()
         .domain(keys)
-        .range(["#2766F6", "#FC363B"])
+        .range(["#f06868", "#00bbf0"])
 
     const container = d3.select(".statistics").append("div").attr("class", "application")
 
@@ -291,6 +310,15 @@ export function applicationGenderDiversity(data1, data2) {
                 return (number / applicationTotal * 100).toFixed(1) + "%"
             })
 
+        svg.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -(height / 2 - 20))
+            .attr("x", (width / 4 - 20))
+            .text("Application")
+
+
+
         function comparison(d) {
             if (compare) {
                 const compareTo = applicationData === applicationData1 ? applicationData2 : applicationData1
@@ -303,16 +331,22 @@ export function applicationGenderDiversity(data1, data2) {
                 const compareTextPercent = container.select(".comparison-data-percent")
                 const compareTextNumber = container.select(".comparison-data-number")
 
-                const percentage = ((value / applicationTotal - compareToValue / compareToApplicationTotal) * 100).toFixed(2)
-                compareTextPercent.text(`${percentage > 0 ? "+" : ""}${percentage}%`)
-                compareTextPercent.style("fill", percentage < 0 ? "red" : "green")
+                if (compareToValue === 0 || value === 0) {
+                    compareTextPercent.text(`N/A`)
+                } else {
+                    const percentage = ((value / applicationTotal - compareToValue / compareToApplicationTotal) * 100).toFixed(2)
+                    compareTextPercent.text(`${percentage > 0 ? "+" : ""}${percentage}%`)
+                    compareTextPercent.style("fill", percentage < 0 ? "red" : "green")
+                    const difference = value - compareToValue
+                    compareTextNumber.text(`${difference > 0 ? "+" : ""}${difference}`)
+                    compareTextNumber.style("fill", difference < 0 ? "red" : "green")
+                }
+
+
                 compareTextPercent.transition()
                     .duration(1000)
                     .attr("font-size", 36)
 
-                const difference = value - compareToValue
-                compareTextNumber.text(`${difference > 0 ? "+" : ""}${difference}`)
-                compareTextNumber.style("fill", difference < 0 ? "red" : "green")
                 compareTextNumber.transition()
                     .duration(1000)
                     .attr("font-size", 24)
@@ -338,27 +372,27 @@ export function applicationGenderDiversity(data1, data2) {
             .attr("width", 200)
             .attr("height", height)
 
-        svg.selectAll("square")
-            .data(keys)
-            .enter()
-            .append("rect")
-            .attr("transform", (d, i) => {
-                return `translate(30 ,${50 + i * 20})`
-            })
-            .attr("height", 20)
-            .attr("width", 20)
-            .style("fill", function (d) {
-                return colors(d)
-            })
+        // svg.selectAll("square")
+        //     .data(keys)
+        //     .enter()
+        //     .append("rect")
+        //     .attr("transform", (d, i) => {
+        //         return `translate(30 ,${50 + i * 20})`
+        //     })
+        //     .attr("height", 20)
+        //     .attr("width", 20)
+        //     .style("fill", function (d) {
+        //         return colors(d)
+        //     })
 
-        svg.selectAll("label")
-            .data(keys)
-            .enter()
-            .append("text")
-            .attr("transform", (d, i) => {
-                return `translate(60 ,${65 + i * 20})`
-            })
-            .text(d => legendLabels[d])
+        // svg.selectAll("label")
+        //     .data(keys)
+        //     .enter()
+        //     .append("text")
+        //     .attr("transform", (d, i) => {
+        //         return `translate(60 ,${65 + i * 20})`
+        //     })
+        //     .text(d => legendLabels[d])
 
         svg.append("text")
             .attr("class", "comparison-data-percent")
@@ -373,4 +407,3 @@ export function applicationGenderDiversity(data1, data2) {
             })
     }
 }
-
