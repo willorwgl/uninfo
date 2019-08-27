@@ -10,7 +10,7 @@ import {
 
 let csvData;
 document.addEventListener("DOMContentLoaded", async () => {
-    await d3.csv("./data/location.csv").then(
+    await d3.csv("./src/assets/data/location.csv").then(
         (response) => {
             csvData = response
         }

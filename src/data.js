@@ -19,7 +19,7 @@ import {
 
 
 export function setup() {
-    d3.csv("./data/statistics.csv").then((unfilteredData) => {
+    d3.csv("./src/assets/data/statistics.csv").then((unfilteredData) => {
         unfilteredData.forEach((university) => {
             Object.keys(university).forEach((key) => {
                 if (key !== "universityName") university[key] = +university[key]
