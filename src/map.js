@@ -100,7 +100,7 @@ window.initMap = () => {
         })
         .then(() => {
             const markerCluster = new MarkerClusterer(map, markers, {
-                imagePath: "./src/assets/images/m"
+                imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
             });
         });
 };
@@ -161,11 +161,11 @@ function addInfoWindow(marker, universityName) {
                                 const idx = selectedUniversities.indexOf(selectedUniversities.find((datum) => datum.universityName === option.parentNode.dataset.university))
                                 selectedUniversities.splice(idx, 1);
                                 const [university1 = null, university2 = null] = selectedUniversities
-                        d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university="${university1.universityName}">${university1.universityName} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university="${university2.universityName}">${university2.universityName} <span class="unselect-option">X</span></div>` : ""}`)
+                                d3.select(".selected-universities").html(`Selected: ${university1 ? `<div class="selected" data-university="${university1.universityName}">${university1.universityName} <span class="unselect-option">X</span></div>` : ""} ${university2 ? `<div class="selected" data-university="${university2.universityName}">${university2.universityName} <span class="unselect-option">X</span></div>` : ""}`)
                                 d3.select(".homepage-arrow").style("display", selectedUniversities.length ? "block" : "none")
                             })
                         })
-                      
+
                     }
                 })
             })
