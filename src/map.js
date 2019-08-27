@@ -100,7 +100,7 @@ window.initMap = () => {
         })
         .then(() => {
             const markerCluster = new MarkerClusterer(map, markers, {
-                imagePath: "/src/assets/images/m"
+                imagePath: "./src/assets/images/m"
             });
         });
 };
