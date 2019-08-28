@@ -77,6 +77,16 @@ export function enrollmentGenderDiversity(data1, data2) {
                 d.outerRadius = outerRadius - 20;
             })
 
+        function tweenPie(b) {
+            b.innerRadius = 0;
+            const i = d3.interpolate({
+                startAngle: 0,
+                endAngle: 0
+            }, b);
+            return function (t) {
+                return arc(i(t));
+            };
+        }
 
         arcs.append("path")
             .attr("d", arc)
@@ -103,6 +113,9 @@ export function enrollmentGenderDiversity(data1, data2) {
                 d3.select(this).style("opacity", 1)
                 resetComparison()
             })
+            .transition()
+            .duration(2000)
+            .attrTween("d", tweenPie)
 
         arcs.append("text")
             .attr("transform", d => {
@@ -272,6 +285,18 @@ export function applicationGenderDiversity(data1, data2) {
             .each((d) => {
                 d.outerRadius = outerRadius - 20;
             })
+
+        function tweenPie(b) {
+            b.innerRadius = 0;
+            const i = d3.interpolate({
+                startAngle: 0,
+                endAngle: 0
+            }, b);
+            return function (t) {
+                return arc(i(t));
+            };
+        }
+
         arcs.append("path")
             .attr("d", arc)
             .attr("fill", (d) => colors(d.data.key))
@@ -295,7 +320,10 @@ export function applicationGenderDiversity(data1, data2) {
                     .duration(500)
                 d3.select(this).style("opacity", 1)
                 resetComparison()
-            })
+            }).transition()
+            .duration(2000)
+            .attrTween("d", tweenPie)
+
 
         arcs.append("text")
             .attr("transform", d => {

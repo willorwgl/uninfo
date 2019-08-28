@@ -28,7 +28,7 @@
     z-index: 4;
     justify-content: center;
     align-content: center;
-    margin-bottom: 30px;
+
 }
 
 .statistics-header div {
@@ -56,7 +56,8 @@
 .sat-container,
 .costs-container,
 .act-container,
-.admission-container {
+.admission-container,
+.diversity-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,20 +68,25 @@
 .application,
 .diversity {
     font-size: 24px;
-}
+} 
 
 .statistics-description {
     margin-top: 15px;
     width: 70vw;
 }
 
+.diversity {
+    margin-top: 10px;
+}
+
 .disclaimer {
     z-index: 4;
-    position: absolute;
+    position: relative;
     font-weight: bolder;
-    left: 33%;
-    top: 40px;
+    margin: 0 auto;
+    width: 600px;
     font-size: 20px;
     color: red;
     line-height: 30px;
+    top: -10px;
 }

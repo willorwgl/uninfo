@@ -78,8 +78,8 @@ export function admissionBarChart(data1, data2) {
             .style("fill", d => colors(d.key))
             .attr("x", d => x(labels[d.key]))
             .attr("width", x.bandwidth() / 2)
-            .attr("y", d => y(d.value))
-            .attr("height", d => height - margin.top - margin.bottom - y(d.value))
+            .attr("y", d => y(0))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .attr("transform", `translate(${x.bandwidth() / 4}, 0)`)
             .on('mouseover', function (d) {
                 tip.show(d, this)
@@ -89,6 +89,22 @@ export function admissionBarChart(data1, data2) {
                 tip.hide(d, this)
                 resetComparison()
             })
+
+        svg.selectAll("rect")
+            .transition()
+            .duration(800)
+            .attr("y", function (d) {
+                return y(d.value);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.value);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+
+
 
         svg.append("text")
             .attr("x", (width / 3))
@@ -157,7 +173,6 @@ export function admissionBarChart(data1, data2) {
 
 
 export function costBarChart(data1, data2) {
-    debugger
     const compare = data1 && data2
     const categorizedCostData1 = [{
             category: "On Campus",
@@ -260,16 +275,16 @@ export function costBarChart(data1, data2) {
             .attr("class", "category")
             .attr("transform", d => `translate(${x0(d.category)},0)`);
 
-        categories.selectAll(".bar.in-district")
+        const rects1 = categories.selectAll(".bar.in-district")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar in-district")
             .style("fill", (d) => colors(0))
             .attr("x", d => x1('inDistrict'))
-            .attr("y", d => y(d.inDistrict))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.inDistrict))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -278,18 +293,30 @@ export function costBarChart(data1, data2) {
                 d3.select(this).style("opacity", 1)
                 resetComparison()
             })
+        rects1
+            .transition()
+            .duration(800)
+            .attr("y", function (d) {
+                return y(d.inDistrict);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.inDistrict);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
 
 
-        categories.selectAll(".bar.in-state")
+        const rects2 = categories.selectAll(".bar.in-state")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar in-state")
             .style("fill", colors(1))
             .attr("x", d => x1('inState'))
-            .attr("y", d => y(d.inState))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.inState))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -299,16 +326,29 @@ export function costBarChart(data1, data2) {
                 resetComparison()
             })
 
-        categories.selectAll(".bar.out-of-state")
+        rects2
+            .transition()
+            .duration(1600)
+            .attr("y", function (d) {
+                return y(d.inState);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.inState);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+        const rects3 = categories.selectAll(".bar.out-of-state")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar out-of-state")
             .style("fill", colors(2))
             .attr("x", d => x1('outOfState'))
-            .attr("y", d => y(d.outOfState))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.outOfState))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -318,31 +358,74 @@ export function costBarChart(data1, data2) {
                 resetComparison()
             })
 
-        categories.append("text").text(d => {
+        rects3
+            .transition()
+            .duration(2400)
+            .attr("y", function (d) {
+                return y(d.outOfState);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.outOfState);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+        const texts1 = categories.append("text").text(d => {
                 return d.inDistrict ? "$" + d.inDistrict : ""
             })
             .attr("transform", function (d) {
                 const xCoord = x1("inDistrict")
-                const yCoord = y(d.inDistrict)
+                const yCoord = y(0)
                 return `translate(${xCoord + 20},${yCoord - 5}) rotate(-90)`
             })
 
-        categories.append("text").text(d => {
+        texts1
+            .transition()
+            .duration(800)
+            .attr("transform", function (d) {
+                return `translate(${x1("inDistrict") + 20} ,${y(d.inDistrict) - 5}) rotate(-90)`
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+        const texts2 = categories.append("text").text(d => {
                 return d.inState ? "$" + d.inState : ""
             })
             .attr("transform", function (d) {
                 const xCoord = x1("inState")
-                const yCoord = y(d.inState)
+                const yCoord = y(0)
                 return `translate(${xCoord + 20},${yCoord - 5}) rotate(-90)`
             })
 
-        categories.append("text").text(d => {
+        texts2
+            .transition()
+            .duration(1600)
+            .attr("transform", function (d) {
+                return `translate(${x1("inState") + 20} ,${y(d.inState) - 5}) rotate(-90)`
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+        const texts3 = categories.append("text").text(d => {
                 return d.outOfState ? "$" + d.outOfState : ""
             })
             .attr("transform", function (d) {
                 const xCoord = x1("outOfState")
-                const yCoord = y(d.outOfState)
+                const yCoord = y(0)
                 return `translate(${xCoord + 20},${yCoord - 5}) rotate(-90)`
+            })
+
+        texts3
+            .transition()
+            .duration(2400)
+            .attr("transform", function (d) {
+                return `translate(${x1("outOfState") + 20} ,${y(d.outOfState) - 5}) rotate(-90)`
+            })
+            .delay(function (d, i) {
+                return (i * 100)
             })
 
         svg.append("g")
@@ -546,16 +629,16 @@ export function SATBarChart(data1, data2) {
             .attr("class", "category")
             .attr("transform", d => `translate(${x0(d.category)},0)`);
 
-        categories.selectAll(".bar.math")
+        const rects1 = categories.selectAll(".bar.math")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar math")
             .style("fill", (d) => colors('math'))
             .attr("x", d => x1('math'))
-            .attr("y", d => y(d.math))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.math))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -565,16 +648,30 @@ export function SATBarChart(data1, data2) {
                 resetComparison()
             })
 
-        categories.selectAll(".bar.reading")
+        rects1
+            .transition()
+            .duration(800)
+            .attr("y", function (d) {
+                return y(d.math);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.math);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+
+        const rects2 = categories.selectAll(".bar.reading")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar reading")
             .style("fill", (d) => colors("reading"))
             .attr("x", d => x1('reading'))
-            .attr("y", d => y(d.reading))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.reading))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -583,6 +680,20 @@ export function SATBarChart(data1, data2) {
                 d3.select(this).style("opacity", 1)
                 resetComparison()
             })
+
+        rects2
+            .transition()
+            .duration(1600)
+            .attr("y", function (d) {
+                return y(d.reading);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.reading);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
 
         categories.append("text").text(d => {
                 return d.reading
@@ -820,16 +931,16 @@ export function ACTBarChart(data1, data2) {
             .attr("class", "category")
             .attr("transform", d => `translate(${x0(d.category)},0)`);
 
-        categories.selectAll(".bar.composite")
+        const rects1 = categories.selectAll(".bar.composite")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar composite")
             .style("fill", (d) => colors('composite'))
             .attr("x", d => x1('composite'))
-            .attr("y", d => y(d.composite))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => (height - margin.top - margin.bottom - y(d.composite)))
+            .attr("height", d => (height - margin.top - margin.bottom - y(0)))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -839,16 +950,29 @@ export function ACTBarChart(data1, data2) {
                 resetComparison()
             })
 
-        categories.selectAll(".bar.math")
+        rects1
+            .transition()
+            .duration(800)
+            .attr("y", function (d) {
+                return y(d.composite);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.composite);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+        const rects2 = categories.selectAll(".bar.math")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar math")
             .style("fill", (d) => colors('math'))
             .attr("x", d => x1('math'))
-            .attr("y", d => y(d.math))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.math))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -858,16 +982,29 @@ export function ACTBarChart(data1, data2) {
                 resetComparison()
             })
 
-        categories.selectAll(".bar.english")
+        rects2
+            .transition()
+            .duration(1600)
+            .attr("y", function (d) {
+                return y(d.math);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.math);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
+            })
+
+        const rects3 = categories.selectAll(".bar.english")
             .data(d => [d])
             .enter()
             .append("rect")
             .attr("class", "bar english")
             .style("fill", (d) => colors("english"))
             .attr("x", d => x1('english'))
-            .attr("y", d => y(d.english))
+            .attr("y", d => y(0))
             .attr("width", x1.bandwidth())
-            .attr("height", d => height - margin.top - margin.bottom - y(d.english))
+            .attr("height", d => height - margin.top - margin.bottom - y(0))
             .on("mouseover", function (d) {
                 d3.select(this).style("opacity", 0.8)
                 comparison(d)
@@ -875,6 +1012,19 @@ export function ACTBarChart(data1, data2) {
             .on("mouseout", function (d) {
                 d3.select(this).style("opacity", 1)
                 resetComparison()
+            })
+
+        rects3
+            .transition()
+            .duration(2400)
+            .attr("y", function (d) {
+                return y(d.english);
+            })
+            .attr("height", function (d) {
+                return height - margin.top - margin.bottom - y(d.english);
+            })
+            .delay(function (d, i) {
+                return (i * 100)
             })
 
         categories.append("text").text(d => {

@@ -32,8 +32,8 @@ export function enrollmentRaceDiversity(data1, data2) {
             right: 20,
             bottom: 20
         },
-        width = 400 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom,
+        width = 440 - margin.left - margin.right,
+        height = 440 - margin.top - margin.bottom,
         outerRadius = height / 2 - 20,
         innerRadius = outerRadius - 70
 
@@ -54,21 +54,19 @@ export function enrollmentRaceDiversity(data1, data2) {
         .range(["#00b8a9", "#f8f3d4", "#f6416c", "#ffde7d", "#B276B2", "#5DA5DA", "#FAA43A", "#F17CB0", "#F15854"])
 
     const centerRadius = innerRadius * 0.8
+    const description = "Racial diversity in United States schools is the representation of different racial or ethnic groups in American schools."
+    const mainContainer = d3.select(".statistics").append("div").attr("class", "diversity-container")
+    mainContainer.append("div").attr("class", "statistics-description").html(description)
+    const container = mainContainer.append("div").attr("class", "diversity")
 
-    const container = d3.select(".statistics").append("div").attr("class", "diversity")
-
-    const description = "Students may want to consider the racial and ethnic diversity of a college campus when choosing a school. The data are drawn from each institution's fall 2017 total undergraduate student body."
-
-
-
-    createDonut(diversityData1)
+    createDonut(diversityData1, data1.universityName)
     createCenter()
     if (compare) {
         var diversityData2 = d3.entries(select(keys, data2))
-        createDonut(diversityData2)
+        createDonut(diversityData2, data2.universityName)
     }
 
-    function createDonut(diversityData) {
+    function createDonut(diversityData, universityName) {
         const svg = container.append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -95,6 +93,9 @@ export function enrollmentRaceDiversity(data1, data2) {
             .on("mouseout.slice", (d) => {
                 resetComparison()
             })
+            .transition()
+            .duration(2000)
+            .attrTween("d", tweenDonut)
 
         svg.append("circle")
             .attr("class", "costs-circle")
@@ -115,9 +116,26 @@ export function enrollmentRaceDiversity(data1, data2) {
             })
 
         svg.append("text")
+            .attr("y", -(height / 2 - 20))
+            .attr("text-anchor", "middle")
+            .style("text-decoration", "underline")
+            .text(universityName);
+
+
+        svg.append("text")
             .attr('class', 'center-stats-text')
             .text("100%")
             .attr("transform", `translate(-${centerRadius / 3}, ${centerRadius / 6})`)
+
+        function tweenDonut(b) {
+            const i = d3.interpolate({
+                startAngle: 0,
+                endAngle: 0
+            }, b);
+            return function (t) {
+                return arc(i(t));
+            };
+        }
 
         function arcTween(outerRadius, delay) {
             return function (d) {
