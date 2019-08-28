@@ -319,7 +319,7 @@ export function costBarChart(data1, data2) {
             })
 
         categories.append("text").text(d => {
-                return "$" + d.inDistrict
+                return d.inDistrict ? "$" + d.inDistrict : ""
             })
             .attr("transform", function (d) {
                 const xCoord = x1("inDistrict")
@@ -328,7 +328,7 @@ export function costBarChart(data1, data2) {
             })
 
         categories.append("text").text(d => {
-                return "$" + d.inState
+                return d.inState ? "$" + d.inState : ""
             })
             .attr("transform", function (d) {
                 const xCoord = x1("inState")
@@ -337,7 +337,7 @@ export function costBarChart(data1, data2) {
             })
 
         categories.append("text").text(d => {
-                return "$" + d.outOfState
+                return d.outOfState ? "$" + d.outOfState : ""
             })
             .attr("transform", function (d) {
                 const xCoord = x1("outOfState")

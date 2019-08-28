@@ -1,87 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Caveat&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://kit.fontawesome.com/dc5c6e0596.js"></script>
-    <link rel="stylesheet" href="./src/assets/stylesheets/tip.css" />
-    <link rel="stylesheet" href="./src/assets/stylesheets/map.css" />
-    <link rel="stylesheet" href="./src/assets/stylesheets/transition.css" />
-    <link rel="stylesheet" href="./src/assets/stylesheets/autocomplete.css" />
-    <link rel="stylesheet" href="./src/assets/stylesheets/statistics.css" />
-    <link rel="stylesheet" href="./src/assets/stylesheets/looseleaf.css" />
 
-    <script src="./src/markerclusterer.js" type="text/javascript"></script>
-    <script src="./src/autoComplete.min.js" type="text/javascript"></script>
-    <script src="./dist/main.js" type="text/javascript"></script>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZg_vz6zlUBgnk3FQ997iHNJBt3n0zBIc&libraries=places&callback=initMap"
-    ></script>
-    <title>Uninfo</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://fonts.googleapis.com/css?family=Caveat&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/dc5c6e0596.js"></script>
+  <link rel="stylesheet" href="./src/assets/stylesheets/tip.css" />
+  <link rel="stylesheet" href="./src/assets/stylesheets/map.css" />
+  <link rel="stylesheet" href="./src/assets/stylesheets/transition.css" />
+  <link rel="stylesheet" href="./src/assets/stylesheets/autocomplete.css" />
+  <link rel="stylesheet" href="./src/assets/stylesheets/statistics.css" />
+  <link rel="stylesheet" href="./src/assets/stylesheets/looseleaf.css" />
 
-  <body>
-    <div class="main" style="position: relative">
-      <div class="paper"></div>
-      <div id="autoComplete-container">
-        <input id="autoComplete" tabindex="1" />
-      </div>
-      <img class="sticky" src="./src/assets/images/sticky.png" alt="" />
-      <div class="selected-universities"></div>
-      <img src="./src/assets/images/doodle-1.png" class="doodle-1" alt="" />
-      <img src="./src/assets/images/hangman.png" class="hangman" alt="" />
+  <script src="./src/markerclusterer.js" type="text/javascript"></script>
+  <script src="./src/autoComplete.min.js" type="text/javascript"></script>
+  <script src="./dist/main.js" type="text/javascript"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZg_vz6zlUBgnk3FQ997iHNJBt3n0zBIc&libraries=places&callback=initMap">
+  </script>
+  <title>Uninfo</title>
+</head>
 
-      <img src="./src/assets/images/arrow.png" class="homepage-arrow" alt="" />
+<body>
 
-      <div class="map-container">
-        <div id="map"></div>
-      </div>
-      <div class="personal-links">
-        <a href="https://github.com/willorwgl" target="_blank"
-          ><i class="fab fa-github"></i
-        ></a>
-        <a
-          href="https://www.linkedin.com/in/william-lu-a455a416b/"
-          target="_blank"
-          ><i class="fab fa-linkedin"></i
-        ></a>
-      </div>
+  <div class="main" style="position: relative; height: 100%;">
+    <div class="paper"></div>
+    <div id="autoComplete-container">
+      <input id="autoComplete" tabindex="1" />
     </div>
 
-    <div class="statistics-container">
-      <img
-        src="./src/assets/images/arrow.png"
-        class="statistics-arrow"
-        alt=""
-      />
-      <div class="paper"></div>
-      <div class="statistics-header">
-        <div class="description-option">Description</div>
-        <div class="price-option">Cost of Attendance</div>
-        <div class="admission-option">Acceptance Rate</div>
-        <div class="enrollment-option">Gender Diversity</div>
-        <div class="race-option">Race Diversity</div>
-        <div class="sat-option">SAT</div>
-        <div class="act-option">ACT</div>
-      </div>
 
-      <div class="statistics">
-        <!-- <div class="description"></div>
-        <div class="costs"></div>
-        <div class="admission"></div>
-        <div class="enrollment"></div>
-        <div class="sat"></div>
-        <div class="act"></div>
-        <div class="application"></div> -->
-        <!-- <div class="diversity"></div> -->
-      </div>
+
+    <img class="sticky" src="./src/assets/images/sticky.png" alt="" />
+    <div class="intro">Uninfo is a data visualization of university statistics.
+      To view the statistics of a particular university,
+      navigate to the university on the map or utilize the search functionality. You can select up to 2 distinct
+      universities and compare
+      their statistics. Once finished selecting, hit the arrow to navigate
+      to the statistics page. </div>
+    <div class="selected-universities"></div>
+    <img src="./src/assets/images/doodle-1.png" class="doodle-1" alt="" />
+    <img src="./src/assets/images/hangman.png" class="hangman" alt="" />
+
+    <img src="./src/assets/images/arrow.png" class="homepage-arrow" alt="" />
+
+    <div class="map-container">
+      <div id="map"></div>
     </div>
-  </body>
+    <div class="personal-links">
+      <a href="https://github.com/willorwgl" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/william-lu-a455a416b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+
+  <div class="statistics-container">
+    <img src="./src/assets/images/arrow.png" class="statistics-arrow" alt="" />
+    <div class="paper"></div>
+    <div class="statistics-header">
+      <div class="description-option">Description</div>
+      <div class="price-option">Cost of Attendance</div>
+      <div class="admission-option">Acceptance Rate</div>
+      <div class="enrollment-option">Gender Diversity</div>
+      <div class="race-option">Race Diversity</div>
+      <div class="sat-option">SAT</div>
+      <div class="act-option">ACT</div>
+      
+    </div>
+<div class="disclaimer">* Some graphs and charts may be imcomplete or empty due to lack of data</div>
+
+    <div class="statistics">
+    </div>
+  </div>
+</body>
+
 </html>

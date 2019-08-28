@@ -73,3 +73,14 @@
     margin-top: 15px;
     width: 70vw;
 }
+
+.disclaimer {
+    z-index: 4;
+    position: absolute;
+    font-weight: bolder;
+    left: 33%;
+    top: 40px;
+    font-size: 20px;
+    color: red;
+    line-height: 30px;
+}
