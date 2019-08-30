@@ -36,6 +36,7 @@ export function statisticsTransitionAnimation() {
         easing: 'easeInOutQuad',
         duration: 1500,
         complete: () => {
+            d3.select(".statistics-container").style("display", "none")
             d3.select(".statistics").html("")
             anime({
                 targets: '.statistics-container',

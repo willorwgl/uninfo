@@ -3,36 +3,37 @@
     position: absolute;
     list-style: none;
     z-index: 10;
-    top: 23px;
-    width: 400px;
+    top: 2.26vh;
+    width: 30vw;
     box-sizing: border-box;
     padding: 0px;
-    border-radius: 5px;
+    font-size: 3vh;
 }
 
 .sticky {
-    position: absolute;
-    width: 500px;
-    height: 300px;
+    position: relative;
+    width: 35vw;
+    height: 40vh;
     z-index: 3;
-    left: -100px;
-    top: -30px;
+    left: -5vw;
+    top: -3vh;
 }
 
 .selected-universities {
-    width: 200px;
-    height: 150px;
+    width: 13vw;
+    height: 21.3vh;
+    font-size: 2.7vh;
     position: absolute;
+    top: 5vh;
     z-index: 4;
     transform: rotate(-8deg);
-    left: 50px;
-
+    left: 6vw;
 }
 
 .selected {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 1vh 0;
     
 }
 
@@ -43,9 +44,9 @@
 #autoComplete {
     width: 100%;
     height: 100%;
-    line-height: 30px;
+    line-height: 4vh;
     vertical-align: center;
-    font-size: 24px;
+    font-size: 3vh;
     box-sizing: border-box;
     outline: none;
     border: none;
@@ -54,16 +55,17 @@
 }
 
 #autoComplete-container {
-    width: 400px;
-    height: 40px;
+    width: 25vw;
+    height: 5.71vh;
     display: block;
-    margin: 0px auto;
+    margin: 0 auto;
     position: relative;
     border-radius: 5px;
+
 }
 
 .autoComplete_result {
-    line-height: 30px;
+    line-height: 4vh;
     cursor: pointer;
     box-sizing: border-box;
 }

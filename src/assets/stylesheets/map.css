@@ -1,7 +1,7 @@
 #map {
   height: 100%;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 1vh;
   border: 1px solid black;
 }
 
@@ -29,50 +29,59 @@
 
 
 .doodle-1 {
-  position: absolute;
-  width: 300px;
-  right: 0px;
-  top: -50px;
-  height: 300px;
+  position: relative;
+  width: 20vw;
+  height: 35vh;
 }
 
 .hangman {
-  width: 200px;
+  width: 15vw;
   position: absolute;
   bottom: 0;
   right: -5px;
 }
 
 .personal-links {
-  font-size: 32px;
-  position: absolute;
-  left: 100px;
-  bottom: 4vh;
+  font-size: 4vh;
   display: flex;
-  width: 75px;
+  position: relative;
+  width: 5vw;
   justify-content: space-between;
 }
 
 .map-container {
-  margin: 0 auto;
-  margin-right: 13vw;
-  margin-top: 120px;
-  height: 500px;
-  width: 900px;
-  padding: 10px;
+  margin-left: 2vw;
+  height: 70vh;
+  width: 62vw;
+  padding: 1vh;
   border: 1px solid black;
   transform: rotate(2deg);
   z-index: 3
 }
 
 .intro {
-  width: 200px;
-  height: 150px;
-  position: absolute;
+  position: relative;
   z-index: 4;
-  left: 100px;
-  top: 34vh;
   font-weight: bold;
-  font-size: 22px;
-  line-height: 30px;
+  font-size: 1.5vw;
+  line-height: 4vh;
+  box-sizing: border-box;
+}
+
+.main-header {
+  height: 20vh;
+  display: flex;
+}
+
+.sidebar {
+  padding-top: 13.5vh;
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  margin-left: 7vw;
+  height: auto;
+}
+
+.main-body {
+  display: flex;
 }

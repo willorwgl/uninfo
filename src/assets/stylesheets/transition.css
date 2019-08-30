@@ -8,11 +8,11 @@ body {
 }
 
 .homepage-arrow {
-    position: absolute;
-    width: 150px;
-    height: 100px;
-    right: 10px;
-    top: 50%;
+    position: relative;
+    width: 12vw;
+    height: 14.2vh;
+    right: -0.7vw;
+    top: 25vh;
     cursor: pointer;
     display: none;
 }

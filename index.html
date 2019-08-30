@@ -3,10 +3,14 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link href="https://fonts.googleapis.com/css?family=Caveat&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/dc5c6e0596.js"></script>
+  <script>
+  window.resizeTo(600, 800)
+  </script>
   <link rel="stylesheet" href="./src/assets/stylesheets/tip.css" />
   <link rel="stylesheet" href="./src/assets/stylesheets/map.css" />
   <link rel="stylesheet" href="./src/assets/stylesheets/transition.css" />
@@ -27,32 +31,46 @@
 
   <div class="main" style="position: relative; height: 100%;">
     <div class="paper"></div>
-    <div id="autoComplete-container">
-      <input id="autoComplete" tabindex="1" />
-    </div>
 
 
-
-    <img class="sticky" src="./src/assets/images/sticky.png" alt="" />
-    <div class="intro">Uninfo is a data visualization of university statistics.
-      To view the statistics of a particular university,
-      navigate to the university on the map or utilize the search functionality. You can select up to 2 distinct
-      universities and compare
-      their statistics. Once finished selecting, hit the arrow to navigate
-      to the statistics page. </div>
-    <div class="selected-universities"></div>
-    <img src="./src/assets/images/doodle-1.png" class="doodle-1" alt="" />
     <img src="./src/assets/images/hangman.png" class="hangman" alt="" />
 
-    <img src="./src/assets/images/arrow.png" class="homepage-arrow" alt="" />
 
-    <div class="map-container">
-      <div id="map"></div>
+
+    <div class="main-header">
+      <img class="sticky" src="./src/assets/images/sticky.png" alt="" />
+      <div class="selected-universities"></div>
+
+      <div id="autoComplete-container">
+        <input id="autoComplete" tabindex="1" />
+      </div>
+      <img src="./src/assets/images/doodle-1.png" class="doodle-1" alt="" />
+
     </div>
-    <div class="personal-links">
-      <a href="https://github.com/willorwgl" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/william-lu-a455a416b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <div class="main-body">
+      <div class="sidebar">
+        <div class="intro">Uninfo is a data visualization of university statistics.
+          To view the statistics of a particular university,
+          navigate to the university on the map or utilize the search functionality. You can select up to 2 distinct
+          universities and compare
+          their statistics. Once finished selecting, hit the arrow to navigate
+          to the statistics page. </div>
+        <div class="personal-links">
+          <a href="https://github.com/willorwgl" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/william-lu-a455a416b/" target="_blank"><i
+              class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+
+      <img src="./src/assets/images/arrow.png" class="homepage-arrow" alt="" />
+
+
     </div>
+
   </div>
 
   <div class="statistics-container">
@@ -66,13 +84,12 @@
       <div class="race-option">Race Diversity</div>
       <div class="sat-option">SAT</div>
       <div class="act-option">ACT</div>
-      
+
     </div>
     <div class="disclaimer">* Some graphs and charts may be imcomplete or empty due to lack of data</div>
 
     <div class="statistics">
     </div>
-  </div>
 </body>
 
 </html>

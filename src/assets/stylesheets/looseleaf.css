@@ -4,14 +4,14 @@
     font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
     width: 50%;
     height: 100%;
-    padding: 6px 42px 4px 42px;
+    padding: 0.8vh 5.62vh 0.53vh .62vh;
     position: absolute !important;
     color: #444;
-    line-height: 30px;
+    line-height: 4.016064257028113vh;
     border: 1px solid #d2d2d2;
     background: #fff;
     background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background-size: 100% 30px;
+    background-size: 100% 4.016064257028113vh;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
     width: 100%;
@@ -24,9 +24,9 @@
 .paper::before {
     content: '';
     position: absolute;
-    width: 7px;
+    width: 0.937vh;
     top: 0;
-    left: 70px;
+    left: 4.3vw;
     bottom: 0;
     border: 1px solid;
     border-color: transparent #efe4e4;
