@@ -3,7 +3,7 @@
 
 ## Overview: 
 
-Uninfo is a data visualization of university statistics (admission rate, diversity, test scores, etc ...) It is meant to help high school seniors and college students looking to transfer (like myself) to have a better understanding of their options. <a href="http://luwilliam.me/uninfo" target="_blank">Check it out!</a>
+Uninfo is a data visualization of university statistics (admission rate, diversity, test scores, etc ...) It is meant to help high school seniors and college students looking to transfer (like myself) to have a better understanding of their options. <a href="http://luwilliam.me/uninfo" target="_blank">Check it Out!</a>
 
 
 ## Functionality and MVPs:
